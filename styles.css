@@ -4,25 +4,73 @@
   --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
   --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
   --gold-gradient: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
-  --consultation-gradient: linear-gradient(90deg, #ff9800 0%, #f44336 100%);
+  --consultation-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
 }
 
 .book-consultation-btn {
   background: var(--consultation-gradient);
   color: #fff;
-  box-shadow: 0 4px 20px rgba(244,67,54,0.2), 0 1.5px 8px rgba(255,152,0,0.15);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3), 0 2px 6px rgba(29, 78, 216, 0.2);
   border: none;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  padding: 0.75rem 2rem;
+  letter-spacing: 0.3px;
+  padding: 0.625rem 1.5rem;
   border-radius: 9999px;
-  font-size: 1rem;
-  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  font-size: 0.875rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
+
+/* Mobile responsive sizing */
+@media (max-width: 640px) {
+  .book-consultation-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.2px;
+  }
+}
+
+/* Tablet sizing */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .book-consultation-btn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Desktop sizing */
+@media (min-width: 1025px) {
+  .book-consultation-btn {
+    padding: 0.75rem 1.75rem;
+    font-size: 0.9rem;
+  }
+}
+
+.book-consultation-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+  transition: left 0.5s ease;
+  z-index: -1;
+}
+
 .book-consultation-btn:hover {
-  background: linear-gradient(90deg, #f44336 0%, #ff9800 100%);
-  transform: scale(1.07);
-  box-shadow: 0 8px 32px rgba(244,67,54,0.25), 0 3px 16px rgba(255,152,0,0.18);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4), 0 4px 12px rgba(29, 78, 216, 0.3);
+}
+
+.book-consultation-btn:hover::before {
+  left: 0;
+}
+
+.book-consultation-btn:active {
+  transform: translateY(0) scale(0.98);
+  transition: all 0.1s ease;
 }
 
 .gradient-text {
@@ -377,6 +425,102 @@
   top: 0;
   left: 0;
   z-index: -1;
+}
+
+/* Demo Modal Styles */
+#demo-modal {
+  display: none;
+}
+
+.demo-modal-show #demo-modal {
+  display: block;
+}
+
+#demo-backdrop {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.demo-modal-show #demo-backdrop {
+  opacity: 1;
+}
+
+.demo-modal-show #demo-content {
+  transform: scale(1);
+}
+
+.demo-tab {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.demo-tab.active {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+}
+
+.demo-tab:hover {
+  color: #2563eb;
+}
+
+.demo-section {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.demo-section.hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal animations */
+.modal-slide-in {
+  animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-slide-out {
+  animation: modalSlideOut 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+}
+
+/* Interactive demo elements */
+.demo-mockup {
+  transition: all 0.3s ease;
+}
+
+.demo-mockup:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 /* Typed cursor styling */
