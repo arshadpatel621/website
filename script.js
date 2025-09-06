@@ -70,19 +70,22 @@ document.addEventListener('DOMContentLoaded', function() {
 // Animated Counters
 function animateCounters() {
   const counters = document.querySelectorAll('.counter');
-  const speed = 200;
-
+  
   counters.forEach(counter => {
     const target = +counter.getAttribute('data-target');
-    const count = +counter.innerText;
-    const inc = target / speed;
-
-    if (count < target) {
-      counter.innerText = Math.ceil(count + inc);
-      setTimeout(() => animateCounters(), 1);
-    } else {
-      counter.innerText = target;
-    }
+    const speed = 2000; // Animation duration in milliseconds
+    const increment = target / (speed / 16); // 60fps
+    let current = 0;
+    
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        counter.textContent = target;
+        clearInterval(timer);
+      } else {
+        counter.textContent = Math.floor(current);
+      }
+    }, 16);
   });
 }
 

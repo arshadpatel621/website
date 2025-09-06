@@ -9,13 +9,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const scheduleConsultationBtn = document.getElementById('schedule-consultation');
     const getQuoteBtn = document.getElementById('get-quote');
 
+    // Animate progress bars in business strategy section
+    function animateProgressBars() {
+        const progressBars = document.querySelectorAll('.progress-fill');
+        progressBars.forEach(bar => {
+            const width = bar.style.width || bar.getAttribute('data-width') || '0%';
+            bar.style.width = '0%';
+            bar.style.transition = 'width 1.5s ease-in-out';
+            
+            setTimeout(() => {
+                bar.style.width = width;
+            }, 100);
+        });
+    }
+
     // Open modal
     if (watchDemoBtn) {
-        watchDemoBtn.addEventListener('click', function() {
-            document.body.classList.add('demo-modal-show');
-            demoContent.classList.add('modal-slide-in');
-            demoContent.classList.remove('modal-slide-out');
+        watchDemoBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Watch Demo button clicked'); // Debug log
+            if (demoBackdrop) {
+                document.body.classList.add('demo-modal-show');
+                demoContent.classList.add('modal-slide-in');
+                demoContent.classList.remove('modal-slide-out');
+                console.log('Modal should be showing'); // Debug log
+            } else {
+                console.error('Modal backdrop not found');
+            }
         });
+    } else {
+        console.error('Watch Demo button not found');
     }
 
     // Close modal function
@@ -51,6 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Tab switching functionality
     demoTabs.forEach((tab, index) => {
         tab.addEventListener('click', function() {
+            console.log('Tab clicked:', tab.getAttribute('data-target')); // Debug log
+            
             // Remove active class from all tabs
             demoTabs.forEach(t => t.classList.remove('active'));
             
@@ -62,10 +87,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 section.classList.add('hidden');
             });
             
-            // Show corresponding section
-            const targetSection = demoSections[index];
+            // Show corresponding section based on data-target
+            const targetName = tab.getAttribute('data-target');
+            const targetSection = document.getElementById(targetName + '-section');
             if (targetSection) {
                 targetSection.classList.remove('hidden');
+            } else {
+                // Fallback to index-based selection
+                const fallbackSection = demoSections[index];
+                if (fallbackSection) {
+                    fallbackSection.classList.remove('hidden');
+                }
+            }
+            
+            // Animate progress bars if overview tab is selected
+            if (targetName === 'overview') {
+                setTimeout(animateProgressBars, 300);
             }
         });
     });
@@ -143,20 +180,6 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = 'translateX(0)';
         });
     });
-
-    // Animate progress bars in business strategy section
-    function animateProgressBars() {
-        const progressBars = document.querySelectorAll('.progress-fill');
-        progressBars.forEach(bar => {
-            const width = bar.style.width || bar.getAttribute('data-width') || '0%';
-            bar.style.width = '0%';
-            bar.style.transition = 'width 1.5s ease-in-out';
-            
-            setTimeout(() => {
-                bar.style.width = width;
-            }, 100);
-        });
-    }
 
     // Run progress bar animation when business strategy tab is clicked
     const businessTab = document.querySelector('.demo-tab[data-target="business"]');
